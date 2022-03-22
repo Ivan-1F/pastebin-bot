@@ -1,0 +1,5 @@
+PASTEBIN_API_KEY = ''
+WS_ADDRESS = '127.0.0.1'
+WS_PORT = 6700
+TRIGGER_LENGTH = 20
+REPLY_FORMAT = '{sender} 发送的消息过长：{pb_url}'
