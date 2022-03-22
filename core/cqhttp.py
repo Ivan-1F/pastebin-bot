@@ -11,14 +11,14 @@ class CQBot(websocket.WebSocketApp):
     def __init__(self):
         url = 'ws://{}:{}/'.format(config.WS_ADDRESS, config.WS_PORT)
         self.logger = Logger('CQBot')
-        super().__init__(url, on_message=self.on_message)
+        super().__init__(url, on_message=self.__on_message)
 
     def __on_group_message(self, message: str, message_id: int, group_id: int, sender_nickname: str):
         print('Received group message from {}: {}'.format(sender_nickname, message))
         self.logger.info('Received group message from {}: {}'.format(sender_nickname, message))
         if len(message) > config.TRIGGER_LENGTH:
             print('Triggered, deleting message and pasting it to pastebin.com')
-            pb_url = pastebin.create_paste(message, '{} 的信息'.format(sender_nickname))
+            pb_url = pastebin.create_paste(message, config.PASTEBIN_TITLE_FORMAT.format(sender=sender_nickname))
             data = {
                 'action': 'send_group_msg',
                 'params': {
@@ -35,7 +35,7 @@ class CQBot(websocket.WebSocketApp):
             }
             self.send(json.dumps(data))
 
-    def on_message(self, _, message: str):
+    def __on_message(self, _, message: str):
         try:
             data = json.loads(message)
             if data['post_type'] == 'message' and data['message_type'] == 'group':
