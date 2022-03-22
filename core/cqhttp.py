@@ -15,10 +15,9 @@ class CQBot(websocket.WebSocketApp):
         super().__init__(url, on_message=self.__on_message)
 
     def __on_group_message(self, message: str, message_id: int, group_id: int, sender_nickname: str):
-        print('Received group message from {}: {}'.format(sender_nickname, message))
         self.logger.info('Received group message from {}: {}'.format(sender_nickname, message))
         if self.__should_trigger(message):
-            print('Triggered, deleting message and pasting it to pastebin.com')
+            self.logger.info('Triggered, deleting message and pasting it to pastebin.com')
             pb_url = pastebin.create_paste(message, config.PASTEBIN_TITLE_FORMAT.format(sender=sender_nickname))
             data = {
                 'action': 'send_group_msg',
