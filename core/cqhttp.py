@@ -40,10 +40,11 @@ class CQBot(websocket.WebSocketApp):
         try:
             data = json.loads(message)
             if data['post_type'] == 'message' and data['message_type'] == 'group':
-                message = data['message']
-                message_id = data['message_id']
-                group_id = data['group_id']
-                self.__on_group_message(message, message_id, group_id, data['sender']['nickname'])
+                if data['group_id'] in config.REACT_GROUP_IDS:
+                    message = data['message']
+                    message_id = data['message_id']
+                    group_id = data['group_id']
+                    self.__on_group_message(message, message_id, group_id, data['sender']['nickname'])
         except Exception as e:
             self.logger.error('Failed to parse message from CQHttp: {}'.format(e))
 

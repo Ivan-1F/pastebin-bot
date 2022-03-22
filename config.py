@@ -7,6 +7,10 @@ PASTEBIN_API_KEY = 'KR1c4grc9hE-dW49voSuun-GEQLGPufC'
 WS_ADDRESS = '127.0.0.1'
 WS_PORT = 6700
 
+# A list of group ids that managed by the bot
+# bot 管理的群号列表
+REACT_GROUP_IDS = ['']
+
 # The format of the message the bot replay when being triggered. Use {variable_name} to access dynamic variables. Variables available:
 # bot 被触发时回复的格式。使用 {变量名} 访问动态变量。可用变量：
 # sender: 发送者的昵称 | the nickname of the sender
